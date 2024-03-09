@@ -1,3 +1,5 @@
+.nvim
+
 # Compiled Lua sources
 luac.out
 
