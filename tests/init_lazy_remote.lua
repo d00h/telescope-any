@@ -26,7 +26,7 @@ lazy.setup({
   },
   {
     url = "d00h/telescope-any",
-    branch = "test-idea",
+    branch = "master",
     dependencies = { "nvim-telescope/telescope.nvim" },
     config = function()
       local telescope_any = require("telescope-any").create_telescope_any()

@@ -58,15 +58,6 @@ local function parse_input(input, pickers, default_picker)
   return default_picker, input
 end
 
-local function pcall_picker(picker, opts)
-  vim.schedule(function()
-    local success, ret = pcall(picker, opts)
-    if not success then
-      vim.api.nvim_echo({ { ret, "ErrorMsg" } }, true, {})
-    end
-  end)
-end
-
 local function create_telescope_any(opts)
   if opts == nil or #opts == 0 then
     opts = create_default_config()
