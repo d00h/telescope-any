@@ -25,7 +25,7 @@ lazy.setup({
     end,
   },
   {
-    url = "d00h/telescope-any",
+    url = "https://github.com/d00h/telescope-any",
     branch = "master",
     dependencies = { "nvim-telescope/telescope.nvim" },
     config = function()
