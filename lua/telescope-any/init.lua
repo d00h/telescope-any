@@ -58,13 +58,31 @@ local function parse_input(input, pickers, default_picker)
   return default_picker, input
 end
 
+local function create_prefix_help_picker(prefixes)
+  return function(opts)
+    local Picker = require("telescope.pickers")
+    local finders = require("telescope.finders")
+    local conf = require("telescope.config").values
+    Picker:new({
+      prompt_title = "Any",
+      finder = finders.new_table({ results = prefixes }),
+      sorter = conf.generic_sorter(opts),
+      on_input_filter_cb = opts.on_input_filter_cb,
+      default_text = opts.default_text,
+      bufnr = opts.bufnr,
+      winnr = opts.winnr,
+    }):find()
+  end
+end
+
 local function create_telescope_any(opts)
   if opts == nil or #opts == 0 then
     opts = create_default_config()
   end
   local pickers, default_picker = split_pickers(opts.pickers or {})
+  local prefix_help_picker = create_prefix_help_picker(vim.tbl_keys(opts.pickers))
   local prev_input = ""
-  local prev_picker = parse_input(prev_input, pickers, default_picker)
+  local prev_picker = prefix_help_picker
 
   local function apply_picker(picker, opts)
     vim.schedule(function()
@@ -86,7 +104,12 @@ local function create_telescope_any(opts)
     local on_input_filter_cb
     on_input_filter_cb = function(input)
       prev_input = input
-      local curr_picker, text = parse_input(input, pickers, default_picker)
+      local curr_picker, text
+      if #input == 0 then
+        curr_picker, text = prefix_help_picker, input
+      else
+        curr_picker, text = parse_input(input, pickers, default_picker)
+      end
       if curr_picker ~= prev_picker then
         apply_picker(curr_picker, {
           on_input_filter_cb = on_input_filter_cb,
