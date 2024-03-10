@@ -5,7 +5,7 @@ local function create_default_config()
       [":"] = builtin.current_buffer_fuzzy_find,
       ["/"] = builtin.live_grep,
 
-      ["m"] = builtin.marks,
+      ["m "] = builtin.marks,
       ["q "] = builtin.quickfix,
       ["l "] = builtin.loclist,
       ["j "] = builtin.jumplist,
@@ -76,7 +76,7 @@ local function create_prefix_help_picker(prefixes)
 end
 
 local function create_telescope_any(opts)
-  if opts == nil or #opts == 0 then
+  if opts == nil or vim.tbl_count(opts) == 0 then
     opts = create_default_config()
   end
   local pickers, default_picker = split_pickers(opts.pickers or {})

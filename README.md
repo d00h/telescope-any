@@ -31,7 +31,7 @@ plugins.register({
       [":"] = builtin.current_buffer_fuzzy_find,
       ["/"] = builtin.live_grep,
 
-      ["m"] = builtin.marks,
+      ["m "] = builtin.marks,
       ["q "] = builtin.quickfix,
       ["l "] = builtin.loclist,
       ["j "] = builtin.jumplist,
